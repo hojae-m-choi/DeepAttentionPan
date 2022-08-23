@@ -119,6 +119,7 @@ def main():
              config.data_file,
              config.test_file,
              config.batch_size,
+             config.hla_sequence_file, 
              max_len_hla=config.max_len_hla,
              max_len_pep=config.max_len_pep,
              model_count=config.model_count

@@ -38,6 +38,16 @@ class Config:
     def test_file(self):
         return os.path.join(BASE_DIR, '..',  'dataset', self.config['Data']['test_file'])
 
+    @property
+    def hla_sequence_file(self):
+        return os.path.join(BASE_DIR, '..',  'dataset', self.config['Data']['hla_sequence_file'])
+
+    @property
+    def train_only_eq(self):
+        if 'train_only_eq' in self.config['Data']:
+            return os.path.join(BASE_DIR, '..',  'dataset', self.config['Data']['train_only_eq'])
+        else:
+            return False
 
     @property
     def model_config(self):

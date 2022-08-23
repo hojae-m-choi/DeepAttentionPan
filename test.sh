@@ -1,0 +1,1 @@
+python -u codes/test.py workdirs/$1/config.json

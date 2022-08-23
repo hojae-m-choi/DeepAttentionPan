@@ -12,7 +12,10 @@ import torch
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class DataProvider:
-    def __init__(self, sequence_encode_func, sequence_encode_func2, data_file, test_file, batch_size, max_len_hla=273, max_len_pep=37,
+    def __init__(self, sequence_encode_func, sequence_encode_func2, data_file, test_file, batch_size, 
+      hla_sequence_file,
+      max_len_hla=273, max_len_pep=37, 
+      train_only_eq=False, train_no_sig=False,
       model_count=5, shuffle=True):
         self.batch_size = batch_size
         self.data_file = data_file
@@ -40,6 +43,8 @@ class DataProvider:
         self.samples = []  
         self.train_samples = []
         self.validation_samples = []
+        self.train_only_eq = train_only_eq
+        self.train_no_sig = train_no_sig
         self.read_training_data()
         self.split_train_and_val()
 
@@ -116,6 +121,10 @@ class DataProvider:
 
                 peptide = info[3]
                 if len(peptide) > self.max_len_pep:
+                    continue
+                
+                inequality = info[4]
+                if self.train_only_eq and inequality != '=':
                     continue
 
                 ic50 = float(info[-1])
