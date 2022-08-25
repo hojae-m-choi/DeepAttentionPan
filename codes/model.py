@@ -211,7 +211,7 @@ class Context_extractor(nn.Module):
     def __init__(self, seq_size):
         super(Context_extractor, self).__init__()
         self.net = nn.Sequential(
-            Conv1dSame(20, 256, 3),
+            Conv1dSame(30, 256, 3),
             nn.LeakyReLU(),
             Conv1dSame(256, 64, 3),
             nn.LeakyReLU(),
@@ -272,7 +272,7 @@ class Model(nn.Module):
         hla_out2  = self.encoder_hla_a2(hla_a_seqs2)
         pep_out2  = self.encoder_peptide2(peptides2)
 
-        context2  = self.context_extractor2([hla_out2, pep_out2])
+        context2  = self.context_extractor2([hla_out2, pep_out2, pep_out2.flip(-1)])
  
         ic50 = self.predictor(context2)
 
