@@ -6,8 +6,7 @@
         "test_file": "no_sig_ngtc_test_raw_B.csv",
         "max_len_hla": 385,
         "max_len_pep": 15,
-        "hla_sequence_file": "mhc_multi_fasta_mapper_no_sig_ngtc.txt",
-        "train_only_eq": true
+        "hla_sequence_file": "mhc_multi_fasta_mapper_no_sig_ngtc.txt"
     },
     "Training": {
         "epochs":100,
@@ -18,7 +17,7 @@
         "loss_delta": 0.0001
     },
     "Paths": {
-        "working_dir": "../workdirs/retrain_human_only_eq_no_sig_ngtc"
+        "working_dir": "../workdirs/train_human_no_sig_ngtc"
     },
     "Model": {
     "encoding_method": "one_hot",
