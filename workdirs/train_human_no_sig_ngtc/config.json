@@ -6,7 +6,8 @@
         "test_file": "no_sig_ngtc_test_raw_B.csv",
         "max_len_hla": 385,
         "max_len_pep": 15,
-        "hla_sequence_file": "mhc_multi_fasta_mapper_no_sig_ngtc.txt"
+        "hla_sequence_file": "mhc_multi_fasta_mapper_no_sig_ngtc.txt",
+        "train_only_eq": true
     },
     "Training": {
         "epochs":100,
@@ -21,7 +22,8 @@
     },
     "Model": {
     "encoding_method": "one_hot",
-	"encoding_method2":"blosum"
+	"encoding_method2":"blosum",
+    "interaction":"concat_inverted"
     },
     "model_count": 10,
     "base_model_count" : 2
