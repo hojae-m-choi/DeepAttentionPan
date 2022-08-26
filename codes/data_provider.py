@@ -65,6 +65,7 @@ class DataProvider:
     def read_hla_sequences(self):
 
         file_path = os.path.join(BASE_DIR, '..','dataset',  self.hla_sequence_file)
+        print(f'Read HLA seq with file: {file_path}')
         with open(file_path, 'r') as in_file:
             for line_num, line in enumerate(in_file):
                 if line_num == 0:
