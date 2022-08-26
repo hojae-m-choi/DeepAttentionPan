@@ -126,8 +126,18 @@ class DataProvider:
                     continue
                 
                 inequality = info[4]
-                if self.train_only_eq and inequality != '=':
+                if self.train_only_eq:
                     continue
+                else:
+                # TODO: considering the case of inequality in > or <
+                    if inequality == '<':
+                        continue # raise NotImplementedError
+                    elif inequality == '>':
+                        continue # raise NotImplementedError
+                    elif inequality == '=':
+                        pass
+                    else:
+                        raise RuntimeError()
 
                 ic50 = float(info[-1])
                 ic50=1-math.log(ic50,50000)
