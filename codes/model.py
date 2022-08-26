@@ -208,10 +208,10 @@ class Attention2(nn.Module):
 
 class Context_extractor(nn.Module):
 
-    def __init__(self, seq_size):
+    def __init__(self, seq_size, in_dim = 20):
         super(Context_extractor, self).__init__()
         self.net = nn.Sequential(
-            Conv1dSame(30, 256, 3),
+            Conv1dSame(in_dim, 256, 3),
             nn.LeakyReLU(),
             Conv1dSame(256, 64, 3),
             nn.LeakyReLU(),
@@ -261,10 +261,14 @@ class Model(nn.Module):
         super(Model, self).__init__()
 
         self.encoder_hla_a2 = CNN_HLA_Encoder(23)
-
+        self.interaction = config.interaction
         self.encoder_peptide2 = CNN_Peptide_Encoder(23)
         
-        self.context_extractor2 = Context_extractor(11)
+        if self.interaction == 'concat_inverted':
+            print('[Model] inverted peptide features are concated in interaction layer')
+            self.context_extractor2 = Context_extractor(11, 30)
+        else: 
+            self.context_extractor2 = Context_extractor(11)
         self.predictor = Predictor(self.context_extractor2.out_vector_dim)
 
     def forward(self, hla_a_seqs, hla_a_mask, hla_a_seqs2, hla_a_mask2,peptides, pep_mask,peptides2,pep_mask2):
@@ -272,7 +276,10 @@ class Model(nn.Module):
         hla_out2  = self.encoder_hla_a2(hla_a_seqs2)
         pep_out2  = self.encoder_peptide2(peptides2)
 
-        context2  = self.context_extractor2([hla_out2, pep_out2, pep_out2.flip(-1)])
+        if self.interaction == 'concat_inverted':
+            context2  = self.context_extractor2([hla_out2, pep_out2, pep_out2.flip(-1)])
+        else: 
+            context2  = self.context_extractor2([hla_out2, pep_out2])
  
         ic50 = self.predictor(context2)
 

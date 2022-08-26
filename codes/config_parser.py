@@ -80,6 +80,18 @@ class Config:
     @property
     def encoding_method2(self):
         return self.model_config['encoding_method2']    
+    
+    @property
+    def interaction(self):
+        if 'interaction' in self.model_config:
+            value = self.model_config['interaction']
+            if value in ('concat_inverted',):
+                return value
+            else:
+                raise NotImplementedError(f'Model:interaction: {value} is not implemented yet.')
+                
+        else:
+            return None
 
     @property
     def do_train(self):
